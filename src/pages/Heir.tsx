@@ -1,12 +1,17 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom'; // For routing
-// import { AddHeir } from '@/components/addHeir'; // Adjust path accordingly
-// import { SendTx } from './components/sendTx'; // Adjust path accordingly
 import { useAccount } from 'wagmi'; // Ensure wagmi is set up correctly in Vite
 
+import ContractAccount from '../components/ContractAccount';
+import { HeirManagement } from '../components/HeirManagement';
+import { Address } from 'viem';
+
 function Heir() {
-  const { isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
   const navigate = useNavigate();
+  const [contractAccountAddress, setContractAccountAddress] = useState<Address | null>(null);
+  
+  
 
   // Redirect to connect wallet page if the wallet is not connected
   useEffect(() => {
@@ -19,71 +24,30 @@ function Heir() {
 
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-          <h1 className="text-2xl font-bold mb-2">Inheritance Settings</h1>
-          <p className="text-gray-600 mb-6">
-            Connect your decentralized wallet and manage your inheritance.
-          </p>
+      <div className="p-8 w-full max-w-md">
+        <h1 className="text-2xl font-bold mb-2 text-center">Inheritance Settings</h1>
+        
+        {address ? (
+          <ContractAccount userAddress={address as Address} setContractAccountAddress={setContractAccountAddress} />
+        ) : (
+          <p className="text-center text-red-500">No Wallet Address Connected</p>
+        )}
+        <HeirManagement userAddress={address as Address} contractAccountAddress={contractAccountAddress!} />
 
-          {/* Decentralized Wallet */}
-          <div className="mb-4">
-            <label
-              htmlFor="wallet"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Decentralized Wallet
-            </label>
-            <input
-              type="text"
-              id="wallet"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Enter your wallet address"
-            />
-            <button className="mt-3 w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
-              Connect Wallet
-            </button>
-          </div>
+        {/* Action Buttons */}
+        <div className="flex justify-between mt-4">
+          {/* Link for Cancel using react-router-dom */}
+          <Link
+            to="/"
+            className="bg-gray-100 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200"
+          >
+            Cancel
+          </Link>
 
-          {/* Inheritance Type */}
-          <div className="mb-4">
-            <label
-              htmlFor="inheritance-type"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Inheritance Type
-            </label>
-            <select
-              id="inheritance-type"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option>Immediate</option>
-              <option>Delayed</option>
-              <option>Scheduled</option>
-            </select>
-          </div>
-
-          {/* Heir Settings */}
-          {/* <AddHeir /> */}
-
-          {/* Uncomment when SendTx is ready */}
-          {/* <SendTx /> */}
-
-          {/* Action Buttons */}
-          <div className="flex justify-between">
-            {/* Link for Cancel using react-router-dom */}
-            <Link
-              to="/"
-              className="bg-gray-100 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200"
-            >
-              Cancel
-            </Link>
-
-            {/* Save Settings Button */}
-            <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
-              Save Settings
-            </button>
-          </div>
+          {/* Save Settings Button */}
+          <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+            Save Settings
+          </button>
         </div>
       </div>
     </>
