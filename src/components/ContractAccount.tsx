@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useReadContract } from 'wagmi';
 import { contractAccountFactoryConfig } from '../services/contractAccountFactoryService';
 import { contractAccountFactoryAbi } from '../services/abi/contractAccountFactoryAbi';
@@ -32,7 +32,13 @@ function ContractAccount({ userAddress, setContractAccountAddress }: ContractAcc
     args: [userAddress],
   });
 
-  
+  useEffect(() => {
+    if (contractAccountAddress && contractAccountAddress !== zeroAddress) {
+      setContractAccountAddress(contractAccountAddress as Address);
+    } else {
+      setContractAccountAddress(null);
+    }
+  }, [contractAccountAddress]);
 
   const handleCreateContractAccount = async () => {
     setCreating(true);
@@ -77,7 +83,9 @@ function ContractAccount({ userAddress, setContractAccountAddress }: ContractAcc
     setCreating(false);
   }
 
-  setContractAccountAddress(contractAccountAddress!);
+  // if (contractAccountAddress) {
+  //   setContractAccountAddress(contractAccountAddress);
+  // }
 
   return (
     <div className="bg-white rounded-lg p-8 text-center">

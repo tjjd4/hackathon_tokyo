@@ -11,8 +11,6 @@ function Heir() {
   const navigate = useNavigate();
   const [contractAccountAddress, setContractAccountAddress] = useState<Address | null>(null);
   
-  
-
   // Redirect to connect wallet page if the wallet is not connected
   useEffect(() => {
     if (!isConnected) {
@@ -20,7 +18,10 @@ function Heir() {
     }
   }, [isConnected, navigate]);
 
-  console.log(isConnected);
+  // Log whenever contractAccountAddress changes
+  useEffect(() => {
+    console.log("Updated contractAccountAddress:", contractAccountAddress);
+  }, [contractAccountAddress]);
 
   return (
     <>
@@ -28,11 +29,26 @@ function Heir() {
         <h1 className="text-2xl font-bold mb-2 text-center">Inheritance Settings</h1>
         
         {address ? (
-          <ContractAccount userAddress={address as Address} setContractAccountAddress={setContractAccountAddress} />
+          <>
+            {/* Pass the setContractAccountAddress function to ContractAccount */}
+            <ContractAccount 
+              userAddress={address as Address} 
+              setContractAccountAddress={setContractAccountAddress} 
+            />
+
+            {/* Only render HeirManagement if contractAccountAddress is set */}
+            {contractAccountAddress ? (
+              <HeirManagement 
+                userAddress={address as Address} 
+                contractAccountAddress={contractAccountAddress} 
+              />
+            ) : (
+              <p className="text-center text-gray-500">Loading contract account details...</p>
+            )}
+          </>
         ) : (
           <p className="text-center text-red-500">No Wallet Address Connected</p>
         )}
-        <HeirManagement userAddress={address as Address} contractAccountAddress={contractAccountAddress!} />
 
         {/* Action Buttons */}
         <div className="flex justify-between mt-4">
@@ -43,11 +59,6 @@ function Heir() {
           >
             Cancel
           </Link>
-
-          {/* Save Settings Button */}
-          <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
-            Save Settings
-          </button>
         </div>
       </div>
     </>
