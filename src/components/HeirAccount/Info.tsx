@@ -69,8 +69,8 @@ export const Info = ({ userAddress, heirAccountAddress }: InfoProps) => {
       <label className="block text-2xl font-bold text-gray-700">Account Information</label>
 
       {/* Display Current Balance */}
-      <p>Predecessor Address: {(currentPredecessorAddress && !predecessorAddressError) ?? currentPredecessorAddress}</p>
-      <p>Current Balance: {(currentBalance && !balanceError) ?? currentBalance}</p>
+      <p>Predecessor Address: {(currentPredecessorAddress && !predecessorAddressError) && currentPredecessorAddress}</p>
+      <p>Current Balance: {(currentBalance && !balanceError) && currentBalance}</p>
 
       {/* Handle errors */}
       {predecessorAddressError && (
