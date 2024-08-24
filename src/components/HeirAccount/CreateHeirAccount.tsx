@@ -5,12 +5,13 @@ import { Address, isAddress, zeroAddress } from 'viem';
 import { BaseError, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 
 interface CreateHeirAccountProps {
-  userAddress: Address; // Ensures that the address is in a valid format
+  userAddress: Address;
+  contractAccountAddress: Address;
   heirAccountAddress: Address;
   refetch: () => void;
 }
 
-function CreateHeirAccount({ userAddress, heirAccountAddress, refetch }: CreateHeirAccountProps) {
+function CreateHeirAccount({ userAddress, contractAccountAddress, heirAccountAddress, refetch }: CreateHeirAccountProps) {
   const [addresses, setAddresses] = useState<string[]>(['']); // Start with one input field
   const [inputErrors, setInputErrors] = useState<string[]>([]); // Track errors for each input
 
@@ -52,7 +53,7 @@ function CreateHeirAccount({ userAddress, heirAccountAddress, refetch }: CreateH
       abi: heirAccountFactoryAbi,
       address: heirAccountFactoryAddress,
       functionName: 'createVault',
-      args: [validAddresses, userAddress],
+      args: [validAddresses, contractAccountAddress],
     });
   };
 
