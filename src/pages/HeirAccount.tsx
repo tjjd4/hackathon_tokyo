@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom'; // For routing
-import { useAccount } from 'wagmi'; // Ensure wagmi is set up correctly in Vite
+import { useAccount } from 'wagmi';
 
 import CreateHeirAccount from "@/components/HeirAccount/CreateHeirAccount";
-import { Nominee } from '@/components/ContractAccount/Nominee';
 import { Address, zeroAddress } from 'viem';
 
 import { useReadContract } from 'wagmi';
 import { heirAccountFactoryConfig } from "@/services/heirAccountFactoryService";
-import { Timeout } from "@/components/ContractAccount/Timeout";
-import { Info } from "@/components/ContractAccount/Info";
+import { Info } from "@/components/HeirAccount/Info";
+import { Heirs } from "@/components/HeirAccount/Heirs";
 
 function HeirAccount() {
   const { address, isConnected } = useAccount();
@@ -30,7 +29,7 @@ function HeirAccount() {
     isLoading,
   } = useReadContract({
     ...heirAccountFactoryConfig,
-    functionName: 'ownedContracts',
+    functionName: 'predecessorToMultiSigAccount',
     args: [address!],
   });
 
@@ -79,15 +78,11 @@ function HeirAccount() {
             <>
               <Info
                 userAddress={address as Address} 
-                contractAccountAddress={heirAccountAddress as Address}
+                heirAccountAddress={heirAccountAddress as Address}
               />
-              <Nominee
+              <Heirs
                 userAddress={address as Address} 
-                contractAccountAddress={heirAccountAddress as Address} 
-              />
-              <Timeout
-                userAddress={address as Address} 
-                contractAccountAddress={heirAccountAddress as Address} 
+                heirAccountAddress={heirAccountAddress as Address} 
               />
             </>
           ) : (
