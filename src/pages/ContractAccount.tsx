@@ -71,7 +71,7 @@ function ContractAccount() {
       <div className="p-8 w-full max-w-md">
         <h1 className="text-2xl font-bold mb-2 text-center">Inheritance Settings</h1>
 
-        <h2 className="text-l font-bold text-gray-800 mb-4">Smart Contract Account Address:</h2>
+        <h2 className="block text-3xl font-bold text-gray-800">Smart Contract Account Address:</h2>
         <p className="text-l font-semibold text-blue-600">
           {(contractAccountAddress && contractAccountAddress != zeroAddress) ? `${contractAccountAddress.toString()}` : 'No Account Found'}
         </p>
