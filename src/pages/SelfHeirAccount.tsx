@@ -32,7 +32,6 @@ function SelfHeirAccount() {
   });
 
   useEffect(() => {
-    console.log(data)
     if (data && data != zeroAddress) {
       setHasSelfHeirAccount(true)
       setSelfHeirAccountAddress(data);

@@ -71,8 +71,6 @@ export const Heirs = ({ userAddress, heirAccountAddress }: HeirsProps) => {
   });
 
   useEffect(() => {
-    console.log("isConfirmed", isConfirmed);
-    console.log("isConfirming", isConfirming);
     if (isConfirmed) {
       refetchHeirsAddress();
       setNewAddress(''); // Clear the input

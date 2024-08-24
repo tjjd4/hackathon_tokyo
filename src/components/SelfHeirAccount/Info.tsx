@@ -42,7 +42,6 @@ export const Info = ({ userAddress, selfHeirAccountAddress }: InfoProps) => {
 
   useEffect(() => {
     if (!isPredecessorAddressLoading && predecessorAddress && isAddress(predecessorAddress)) {
-      console.log("Predecessor Address", predecessorAddress)
       setCurrentPredecessorAddress(predecessorAddress);
     }
 
@@ -54,7 +53,6 @@ export const Info = ({ userAddress, selfHeirAccountAddress }: InfoProps) => {
 
   useEffect(() => {
     if (!isBalanceLoading && balanceData) {
-      console.log("balance data", balanceData)
       setCurrentBalance(`${balanceData.formatted} ${balanceData.symbol}`);
     }
 
