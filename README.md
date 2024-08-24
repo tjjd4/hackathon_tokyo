@@ -21,7 +21,7 @@ cd hackathon_tokyo
 ```
 ### 2. Install Dependencies
 For npm:
-bash```
+```bash
 npm install
 ```
 
