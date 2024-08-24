@@ -1,5 +1,3 @@
-"use client"; // Ensure this is treated as a Client Component
-
 import { useEffect, useState } from 'react';
 import { 
   BaseError,
