@@ -16,6 +16,9 @@ function Navbar() {
           <Link to="/contractaccount" className="ml-4 text-lg font-bold hover:text-gray-300">
             Contract Account
           </Link>
+          <Link to="/heiraccount" className="ml-4 text-lg font-bold hover:text-gray-300">
+            Inheiritee MultiSig Account
+          </Link>
         </div>
 
         <div className="flex items-center">
