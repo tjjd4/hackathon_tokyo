@@ -94,7 +94,7 @@ function HeirAccount() {
           <h1 className="text-2xl font-bold">Heir Account Settings</h1>
         </div>
         <div className="p-6">
-          {(!isCAAddressLoading && !hasContractAccount && contractAccountAddress) ? (
+          {(!isCAAddressLoading && !hasContractAccount && !contractAccountAddress) ? (
             <div className="text-center">
               <p className="text-gray-300 mb-4">You need to create a Contract Account before you can use the Vault feature.</p>
               <Link
