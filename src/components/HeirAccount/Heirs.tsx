@@ -45,6 +45,7 @@ export const Heirs = ({ userAddress, heirAccountAddress }: HeirsProps) => {
     }
     if (heirsAddressesError) {
       console.log("Error fetching Heirs Addresses:", heirsAddressesError.message);
+      setCurrentHeirsAddresses(null);
     }
   }, [data, isHeirsAddressesLoading, heirsAddressesError]);
 

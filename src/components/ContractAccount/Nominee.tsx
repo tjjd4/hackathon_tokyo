@@ -10,7 +10,7 @@ interface NomineeProps {
 
 export const Nominee = ({ userAddress, contractAccountAddress }: NomineeProps) => {
   const [nomineeInput, setNomineeInput] = useState('');
-  const [currentNominee, setCurrentNominee] = useState('');
+  const [currentNominee, setCurrentNominee] = useState<Address | null>(null);
   const [inputError, setInputError] = useState<string | null>(null);
 
   const { 
@@ -39,6 +39,7 @@ export const Nominee = ({ userAddress, contractAccountAddress }: NomineeProps) =
     }
     if (configError) {
       console.log("Error fetching config:", configError);
+      setCurrentNominee(null);
     }
   }, [config, isConfigLoading, configError]);
 
@@ -84,7 +85,7 @@ export const Nominee = ({ userAddress, contractAccountAddress }: NomineeProps) =
       <label className="block text-2xl font-bold text-gray-700">Nominee Settings</label>
       
       {/* Display Current Nominee Address */}
-      <p>Nominee Address: {currentNominee !== '' ? currentNominee : 'Not set'}</p>
+      <p>Nominee Address: {currentNominee ? currentNominee : 'Not set'}</p>
 
       {/* Input Field for Nominee Address */}
       <input

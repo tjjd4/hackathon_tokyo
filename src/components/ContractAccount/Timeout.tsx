@@ -31,6 +31,7 @@ export const Timeout = ({ userAddress, contractAccountAddress }: TimeoutProps) =
 
     if (configError) {
       console.log("Error fetching config:", configError);
+      setCurrentTimeout(null);
     }
   }, [config, isConfigLoading, configError]);
 
@@ -76,7 +77,7 @@ export const Timeout = ({ userAddress, contractAccountAddress }: TimeoutProps) =
       <label className="block text-2xl font-bold text-gray-700">Timeout Settings</label>
 
       {/* Display Current Timeout */}
-      <p>Current Timeout: {currentTimeout !== null && currentTimeout !== '0' ? currentTimeout : 'Not set'}</p>
+      <p>Current Timeout: {currentTimeout && currentTimeout !== '0' ? currentTimeout : 'Not set'}</p>
 
       {/* Input Field for Timeout */}
       <input

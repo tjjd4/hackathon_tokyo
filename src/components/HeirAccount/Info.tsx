@@ -48,6 +48,7 @@ export const Info = ({ userAddress, heirAccountAddress }: InfoProps) => {
 
     if (predecessorAddressError) {
       console.log("Error fetching predecessor Address:", predecessorAddressError.message);
+      setCurrentPredecessorAddress(null);
     }
   }, [balanceData, balanceError])
 
@@ -59,6 +60,7 @@ export const Info = ({ userAddress, heirAccountAddress }: InfoProps) => {
 
     if (balanceError) {
       console.log("Error fetching balance:", balanceError.message);
+      setCurrentBalance(null);
     }
   }, [balanceData, balanceError])
 
@@ -67,8 +69,8 @@ export const Info = ({ userAddress, heirAccountAddress }: InfoProps) => {
       <label className="block text-2xl font-bold text-gray-700">Account Information</label>
 
       {/* Display Current Balance */}
-      <p>Predecessor Address: {currentPredecessorAddress !== null ? currentPredecessorAddress : 'Loading...'}</p>
-      <p>Current Balance: {currentBalance !== null ? currentBalance : 'Loading...'}</p>
+      <p>Predecessor Address: {(currentPredecessorAddress && !predecessorAddressError) ?? currentPredecessorAddress}</p>
+      <p>Current Balance: {(currentBalance && !balanceError) ?? currentBalance}</p>
 
       {/* Handle errors */}
       {predecessorAddressError && (

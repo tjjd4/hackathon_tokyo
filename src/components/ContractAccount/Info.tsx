@@ -73,6 +73,7 @@ export const Info = ({ userAddress, contractAccountAddress }: InfoProps) => {
 
     if (balanceError) {
       console.log("Error fetching balance:", balanceError.message);
+      setCurrentBalance(null);
     }
   }, [, balanceData, balanceError])
 
@@ -81,13 +82,13 @@ export const Info = ({ userAddress, contractAccountAddress }: InfoProps) => {
       <label className="block text-2xl font-bold text-gray-700">Account Information</label>
 
       {/* Display Current Balance */}
-      <p>Current Balance: {currentBalance !== null ? currentBalance : 'Loading...'}</p>
+      <p>Current Balance: {(currentBalance && !balanceError) ?? currentBalance}</p>
 
       {/* Display Last Access */}
-      <p>Last Access: {currentLastAccess !== null ? currentLastAccess : 'Not set'}</p>
+      <p>Last Access: {(currentLastAccess && !configError) ?? currentLastAccess}</p>
 
       {/* Display Last Request */}
-      <p>Last Request: {currentLastRequest !== null ? currentLastRequest : 'Not set'}</p>
+      <p>Last Request: {(currentLastRequest && !configError) ?? currentLastRequest}</p>
 
       {/* Handle errors */}
       {configError && (
