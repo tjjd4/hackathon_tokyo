@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { contractAccountFactoryAbi } from '../services/abi/contractAccountFactoryAbi';
 import { contractAccountFactoryAddress } from '../services/contractAccountFactoryService';
 import { Address, zeroAddress } from 'viem';
@@ -10,8 +9,7 @@ interface CreateContractAccountProps {
 }
 
 function CreateContractAccount({ userAddress, contractAccountAddress }: CreateContractAccountProps) {
-  const [creating, setCreating] = useState(false);
-
+  console.log("Contract Address",contractAccountAddress);
   const { 
     data: hash,
     isPending,
@@ -20,16 +18,12 @@ function CreateContractAccount({ userAddress, contractAccountAddress }: CreateCo
   } = useWriteContract()
 
   const handleCreateContractAccount = async () => {
-    setCreating(true);
-    
-    if (contractAccountAddress == zeroAddress) {
-      writeContract({
-        abi: contractAccountFactoryAbi,
-        address: contractAccountFactoryAddress,
-        functionName: 'createContractAccount',
-        args: [],
-      })
-    }
+    writeContract({
+      abi: contractAccountFactoryAbi,
+      address: contractAccountFactoryAddress,
+      functionName: 'createContractAccount',
+      args: [],
+    })
   };
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
@@ -37,19 +31,15 @@ function CreateContractAccount({ userAddress, contractAccountAddress }: CreateCo
     hash,
   })
 
-  if (isConfirmed || creatingError) {
-    setCreating(false);
-  }
-
   return (
     <>
-      {contractAccountAddress === zeroAddress && (
+      {(!contractAccountAddress || contractAccountAddress == zeroAddress) && (
         <button
           className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
           onClick={handleCreateContractAccount}
-          disabled={creating || isPending}
+          disabled={isConfirming || isPending}
         >
-          {creating ? 'Creating...' : 'Create Contract Account'}
+          {(isConfirming || isPending) ? 'Creating...' : 'Create Contract Account'}
         </button>
       )}
 

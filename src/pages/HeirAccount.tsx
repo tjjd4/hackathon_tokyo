@@ -4,18 +4,17 @@ import { useAccount } from 'wagmi'; // Ensure wagmi is set up correctly in Vite
 
 import CreateContractAccount from '../components/CreateContractAccount';
 import { Nominee } from '../components/Nominee';
-import { Address, isAddress, zeroAddress } from 'viem';
+import { Address, zeroAddress } from 'viem';
 
 import { useReadContract } from 'wagmi';
 import { contractAccountFactoryConfig } from '../services/contractAccountFactoryService';
-import { Timeout } from "../components/Timeout"
+import { Timeout } from "../components/Timeout";
 import { Info } from "../components/Info";
 
-function ContractAccount() {
+function HeirAccount() {
   const { address, isConnected } = useAccount();
   const navigate = useNavigate();
-  const [contractAccountAddress, setContractAccountAddress] = useState<Address | null>(null);
-  const [hasContractAccount, setHasContractAccount] = useState(false);
+  const [heirAccountAddress, setHeirAccountAddress] = useState<Address | null>(null);
   
   // Redirect to connect wallet page if the wallet is not connected
   useEffect(() => {
@@ -28,7 +27,6 @@ function ContractAccount() {
     data,
     error,
     isLoading,
-    refetch: refetchContractAddress,
   } = useReadContract({
     ...contractAccountFactoryConfig,
     functionName: 'deployedContracts',
@@ -36,15 +34,11 @@ function ContractAccount() {
   });
 
   useEffect(() => {
-    console.log("Data", data)
-    if (data && data != zeroAddress && isAddress(data)) {
-      setHasContractAccount(true);
-      setContractAccountAddress(data);
-    } else {
-      console.log("set false")
-      setHasContractAccount(false);
+    console.log(data)
+    if (data && data != zeroAddress) {
+      setHeirAccountAddress(data);
     }
-  }, [data])
+  }, [data]);
 
   if (isLoading) {
     return (
@@ -69,32 +63,33 @@ function ContractAccount() {
   return (
     <>
       <div className="p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-2 text-center">Inheritance Settings</h1>
+        <h1 className="text-2xl font-bold mb-2 text-center">Heir Account Settings</h1>
 
-        <h2 className="text-l font-bold text-gray-800 mb-4">Smart Contract Account Address:</h2>
+        <h2 className="text-l font-bold text-gray-800 mb-4">Heir Smart Contract Account Address:</h2>
         <p className="text-l font-semibold text-blue-600">
-          {(contractAccountAddress && contractAccountAddress != zeroAddress) ? `${contractAccountAddress.toString()}` : 'No Account Found'}
+          {(heirAccountAddress && heirAccountAddress != zeroAddress) ? `${heirAccountAddress.toString()}` : 'No Account Found'}
         </p>
-          {hasContractAccount ? (
+          {heirAccountAddress ? (
             <>
+              <CreateContractAccount
+                userAddress={address as Address}
+                contractAccountAddress={heirAccountAddress as Address}
+              />
               <Info
                 userAddress={address as Address} 
-                contractAccountAddress={contractAccountAddress as Address}
+                contractAccountAddress={heirAccountAddress as Address}
               />
               <Nominee
                 userAddress={address as Address} 
-                contractAccountAddress={contractAccountAddress as Address} 
+                contractAccountAddress={heirAccountAddress as Address} 
               />
               <Timeout
                 userAddress={address as Address} 
-                contractAccountAddress={contractAccountAddress as Address} 
+                contractAccountAddress={heirAccountAddress as Address} 
               />
             </>
-          ) : (
-            <CreateContractAccount
-              userAddress={address as Address}
-              contractAccountAddress={contractAccountAddress as Address}
-            />
+            ) : (
+            <p className="text-center text-gray-500">Loading heir contract account details...</p>
           )}
 
         {/* Action Buttons */}
@@ -112,4 +107,4 @@ function ContractAccount() {
   );
 }
 
-export default ContractAccount;
+export default HeirAccount;
