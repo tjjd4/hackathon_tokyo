@@ -6,15 +6,11 @@ import { useReadContract } from 'wagmi';
 
 import { heirAccountFactoryConfig } from "@/services/heirAccountFactoryService";
 
-import { Info } from "@/components/HeirAccount/Info";
-import { Heirs } from "@/components/HeirAccount/Heirs";
-import CreateHeirAccount from "@/components/HeirAccount/CreateHeirAccount";
-
-function HeirAccount() {
+function SelfHeirAccount() {
   const { address, isConnected } = useAccount();
   const navigate = useNavigate();
-  const [heirAccountAddress, setHeirAccountAddress] = useState<Address | null>(null);
-  const [hasHeirAccount, setHasHeirAccount] = useState(false);
+  const [selfHeirAccountAddress, setSelfHeirAccountAddress] = useState<Address | null>(null);
+  const [hasSelfHeirAccount, setHasSelfHeirAccount] = useState(false);
   
   // Redirect to connect wallet page if the wallet is not connected
   useEffect(() => {
@@ -36,12 +32,12 @@ function HeirAccount() {
   useEffect(() => {
     console.log(data)
     if (data && data != zeroAddress) {
-      setHasHeirAccount(true)
-      setHeirAccountAddress(data);
+      setHasSelfHeirAccount(true)
+      setSelfHeirAccountAddress(data);
     } else {
       console.log("Set `Has account` false");
-      setHasHeirAccount(false);
-      setHeirAccountAddress(null);
+      setHasSelfHeirAccount(false);
+      setSelfHeirAccountAddress(null);
     }
   }, [data]);
 
@@ -72,24 +68,23 @@ function HeirAccount() {
 
         <h2 className="text-l font-bold text-gray-800 mb-4">Heir Smart Contract Account Address:</h2>
         <p className="text-l font-semibold text-blue-600">
-          {(heirAccountAddress && heirAccountAddress != zeroAddress) ? `${heirAccountAddress.toString()}` : 'No Account Found'}
+          {(selfHeirAccountAddress && selfHeirAccountAddress != zeroAddress) ? `${selfHeirAccountAddress.toString()}` : 'No Account Found'}
         </p>
-          {hasHeirAccount ? (
+          {hasSelfHeirAccount ? (
             <>
-              <Info
+              {/* <Info
                 userAddress={address as Address} 
                 heirAccountAddress={heirAccountAddress as Address}
               />
               <Heirs
                 userAddress={address as Address} 
                 heirAccountAddress={heirAccountAddress as Address} 
-              />
+              /> */}
             </>
           ) : (
-            <CreateHeirAccount 
-              userAddress={address as Address} 
-              heirAccountAddress={heirAccountAddress as Address}
-            />
+            <p className="text-center text-lg font-semibold text-red-500">
+              Please notify the inheritor to create a Vault for you in order to proceed operation.
+            </p>
           )}
 
         {/* Action Buttons */}
@@ -107,4 +102,4 @@ function HeirAccount() {
   );
 }
 
-export default HeirAccount;
+export default SelfHeirAccount;
