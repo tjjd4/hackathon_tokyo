@@ -5,7 +5,7 @@ import {
   useWriteContract,
   useWaitForTransactionReceipt,
 } from 'wagmi';
-import { Address, isAddress } from 'viem';
+import { Address, isAddress, zeroAddress } from 'viem';
 
 import { contractAccountAbi } from '@/services/abi/contractAccountAbi';
 import { heirAccountAbi } from '@/services/abi/heirAccountAbi';
@@ -17,6 +17,7 @@ interface RequestProps {
 
 export const Request = ({ userAddress, selfHeirAccountAddress }: RequestProps) => {
   const [currentPredecessorAddress, setCurrentPredecessorAddress] = useState<Address | null>(null);
+  const [isRequestable, setIsRequestable] = useState(false);
 
   const { 
     data: hash,
@@ -24,10 +25,6 @@ export const Request = ({ userAddress, selfHeirAccountAddress }: RequestProps) =
     error,
     writeContract
   } = useWriteContract();
-
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
-    hash,
-  });
 
   const { data: predecessorAddress, isLoading: isPredecessorAddressLoading, error: predecessorAddressError } = useReadContract({
     abi: heirAccountAbi,
@@ -47,19 +44,41 @@ export const Request = ({ userAddress, selfHeirAccountAddress }: RequestProps) =
     }
   }, [predecessorAddress, isPredecessorAddressLoading, predecessorAddressError])
 
-  if (currentPredecessorAddress && isAddress(currentPredecessorAddress)) {
-    const {
-      data: config,
-      isLoading: isConfigLoading,
-      error: configError,
-      refetch: refetchConfig,
-    } = useReadContract({
-      abi: contractAccountAbi,
-      address: currentPredecessorAddress,
-      functionName: 'config',
-      args: [],
-    });
-  }
+
+  useEffect(() => {
+    if (currentPredecessorAddress) {
+      const fetch = async () => {
+        const { data: config, error: configError } = await useReadContract({
+          abi: contractAccountAbi,
+          address: currentPredecessorAddress,
+          functionName: 'config',
+          args: [],
+        });
+
+        const {data: withdrawable, error: withdrawableError } = await useReadContract({
+          abi: contractAccountAbi,
+          address: currentPredecessorAddress,
+          functionName: 'isWithdrawable',
+          args: [],
+        });
+
+        if (withdrawable == false && config[0] > config[2]) {
+          setIsRequestable(true);
+        } else {
+          setIsRequestable(false);
+        }
+        if (configError) {
+          console.error('Error fetching config:', configError.message);
+        }
+        
+        if (withdrawableError) {
+          console.error('Error fetching config:', withdrawableError.message);
+        }
+      };
+
+      fetch();
+    }
+  }, [currentPredecessorAddress, isConfirmed]);
 
   const handleRequest = async () => {
     if (!currentPredecessorAddress) {
@@ -71,21 +90,34 @@ export const Request = ({ userAddress, selfHeirAccountAddress }: RequestProps) =
       abi: contractAccountAbi,
       address: currentPredecessorAddress,
       functionName: 'requestInactiveAccount',
-      args: [], // Adjust the args based on the smart contract function signature
+      args: [],
     });
   };
 
-  useEffect(() => {
-    if (isConfirmed) {
-      refetchConfig();
-    }
-    if (!isConfirming && !isConfirmed) {
-      console.log("Error: ", );
-    }
-  }, [isConfirming, isConfirmed])
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  });
 
   return (
     <>
+      <button
+        onClick={handleRequest}
+        className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+        disabled={isPending || isConfirming}
+      >
+        {isConfirming || isPending ? 'Processing...' : 'Send Request'}
+      </button>
+      {isConfirmed && <div className="text-green-500 mt-2">Transaction confirmed!</div>}
+      {isConfirming && <div>Waiting for confirmation...</div>}
+      {isConfirmed && <div>Transaction confirmed.</div>}
+
+      {/* Show transaction information */}
+      {error && (
+        <div className="text-red-500 mt-2">
+          Error: {(error as BaseError).shortMessage || error.message}
+        </div>
+      )}
+      {hash && <div className="text-green-500 mt-2">Transaction Hash: {hash}</div>}
     </>
   );
 }
