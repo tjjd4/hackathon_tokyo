@@ -9,7 +9,6 @@ interface CreateContractAccountProps {
 }
 
 function CreateContractAccount({ userAddress, contractAccountAddress }: CreateContractAccountProps) {
-  console.log("Contract Address",contractAccountAddress);
   const { 
     data: hash,
     isPending,

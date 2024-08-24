@@ -21,7 +21,7 @@ function CreateHeirAccount({ userAddress, heirAccountAddress }: CreateHeirAccoun
   } = useWriteContract();
 
   const handleCreateHeirAccount = async () => {
-    const newInputErrors = addresses.map((address, index) => {
+    const newInputErrors = addresses.map((address) => {
       if (address.trim() === '') {
         return 'This field is required';
       }
@@ -45,8 +45,6 @@ function CreateHeirAccount({ userAddress, heirAccountAddress }: CreateHeirAccoun
     if (validAddresses.length != addresses.length) {
       return;
     }
-
-    const numOfConfirmationRequired = validAddresses.length
 
     // Write to the contract with the list of addresses
     writeContract({

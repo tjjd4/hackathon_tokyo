@@ -43,7 +43,7 @@ function HeirAccount() {
       setHasHeirAccount(false);
       setHeirAccountAddress(null);
     }
-  }, [data]);
+  }, [data, isLoading, error]);
 
   if (isLoading) {
     return (

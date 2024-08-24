@@ -17,8 +17,8 @@ export const heirAccountAbi = [
   },
   {
     type: 'event',
-    anonymous: false,
     name: 'ConfirmTransaction',
+    anonymous: false,
     inputs: [
       {
         indexed: true,
@@ -36,8 +36,8 @@ export const heirAccountAbi = [
   },
   {
     type: 'event',
-    anonymous: false,
     name: 'Deposit',
+    anonymous: false,
     inputs: [
       {
         indexed: true,
@@ -61,8 +61,8 @@ export const heirAccountAbi = [
   },
   {
     type: 'event',
-    anonymous: false,
     name: 'ExecuteTransaction',
+    anonymous: false,
     inputs: [
       {
         indexed: true,
@@ -80,8 +80,8 @@ export const heirAccountAbi = [
   },
   {
     type: 'event',
-    anonymous: false,
     name: 'RevokeConfirmation',
+    anonymous: false,
     inputs: [
       {
         indexed: true,
@@ -99,8 +99,8 @@ export const heirAccountAbi = [
   },
   {
     type: 'event',
-    anonymous: false,
     name: 'SignerAdjusted',
+    anonymous: false,
     inputs: [
       {
         indexed: true,
@@ -118,8 +118,8 @@ export const heirAccountAbi = [
   },
   {
     type: 'event',
-    anonymous: false,
     name: 'SubmitConsensus',
+    anonymous: false,
     inputs: [
       {
         indexed: true,
@@ -149,8 +149,8 @@ export const heirAccountAbi = [
   },
   {
     type: 'event',
-    anonymous: false,
     name: 'SubmitTransaction',
+    anonymous: false,
     inputs: [
       {
         indexed: true,
@@ -198,6 +198,24 @@ export const heirAccountAbi = [
         internalType: 'uint256[]',
         name: '_portion',
         type: 'uint256[]'
+      }
+    ],
+    outputs: []
+  },
+  {
+    type: 'function',
+    name: 'adjustSigner',
+    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_from',
+        type: 'address'
+      },
+      {
+        internalType: 'address',
+        name: '_to',
+        type: 'address'
       }
     ],
     outputs: []
@@ -572,4 +590,4 @@ export const heirAccountAbi = [
     type: 'receive',
     stateMutability: 'payable'
   }
-]  as const
+] as const

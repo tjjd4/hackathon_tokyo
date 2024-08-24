@@ -74,8 +74,6 @@ export const Nominee = ({ userAddress, contractAccountAddress }: NomineeProps) =
 
   // Update the current nominee after transaction is confirmed
   useEffect(() => {
-    console.log("isConfirmed", isConfirmed);
-    console.log("isConfirming", isConfirming);
     if (isConfirmed) {
       refetchConfig();
       setNomineeInput(''); // Clear the input

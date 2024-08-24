@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { 
   BaseError,
   useReadContract,
-  useWatchContractEvent,
   useWaitForTransactionReceipt,
   useWriteContract,
 } from 'wagmi';
@@ -31,7 +30,7 @@ export const Heirs = ({ userAddress, heirAccountAddress }: HeirsProps) => {
     data, 
     isLoading: isHeirsAddressesLoading, 
     error: heirsAddressesError, 
-    refetch: refetchConfig 
+    refetch: refetchHeirsAddress
   } = useReadContract({
     abi: heirAccountAbi,
     address: heirAccountAddress,
@@ -58,12 +57,12 @@ export const Heirs = ({ userAddress, heirAccountAddress }: HeirsProps) => {
     setInputError(null); // Clear the error if everything is valid
 
     // Call the contract function with selectedHeir and newAddress
-    // writeContract({
-    //   abi: heirAccountAbi,
-    //   address: heirAccountAddress,
-    //   functionName: 'adjustOwner',
-    //   args: [selectedHeir, newAddress],
-    // });
+    writeContract({
+      abi: heirAccountAbi,
+      address: heirAccountAddress,
+      functionName: 'adjustSigner',
+      args: [selectedHeir, newAddress],
+    });
   };
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
@@ -75,7 +74,7 @@ export const Heirs = ({ userAddress, heirAccountAddress }: HeirsProps) => {
     console.log("isConfirmed", isConfirmed);
     console.log("isConfirming", isConfirming);
     if (isConfirmed) {
-      refetchConfig();
+      refetchHeirsAddress();
       setNewAddress(''); // Clear the input
     }
   }, [isConfirming, isConfirmed])

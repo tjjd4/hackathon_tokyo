@@ -67,7 +67,6 @@ export const Info = ({ userAddress, contractAccountAddress }: InfoProps) => {
 
   useEffect(() => {
     if (!isBalanceLoading && balanceData) {
-      console.log("balance data", balanceData)
       setCurrentBalance(`${balanceData.formatted} ${balanceData.symbol}`);
     }
 

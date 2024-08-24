@@ -1,6 +1,6 @@
 import { heirAccountFactoryAbi } from "./abi/heirAccountFactoryAbi"
 
-export const heirAccountFactoryAddress = '0xCc535C3a345602A6ed736b0505D850D94D38661a';
+export const heirAccountFactoryAddress = '0x132FDBec1b7327d8E63E145b965Cb947071Ca72D';
 
 export const heirAccountFactoryConfig = {
   address: heirAccountFactoryAddress, // Replace with your contract's address
