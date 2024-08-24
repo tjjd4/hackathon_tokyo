@@ -33,10 +33,10 @@ function Home() {
           {account.status === 'connected' ? (
             <>
               <Link
-                to="/heir"
+                to="/contractaccount"
                 className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
               >
-                Go to Heir Page
+                Get your Contract Account
               </Link>
             </>
           ) : (

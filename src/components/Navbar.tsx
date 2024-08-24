@@ -9,14 +9,14 @@ function Navbar() {
   return (
     <nav className="bg-gray-800 p-4 text-white">
       <div className="container mx-auto flex justify-between items-center">
-        {/* <div>
+        <div>
           <Link to="/" className="text-lg font-bold hover:text-gray-300">
             Home
           </Link>
-          <Link to="/about" className="ml-4 text-lg font-bold hover:text-gray-300">
-            About
+          <Link to="/contractaccount" className="ml-4 text-lg font-bold hover:text-gray-300">
+            Contract Account
           </Link>
-        </div> */}
+        </div>
 
         <div className="flex items-center">
           {account.status === 'connected' ? (
