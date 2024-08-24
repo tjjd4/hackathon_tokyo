@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 
+import { validConnectorNames } from '@/wagmi';
+
 function Navbar() {
   const account = useAccount();
   const { connectors, connect, status, error } = useConnect();
@@ -15,6 +17,9 @@ function Navbar() {
           </Link>
           <Link to="/contractaccount" className="ml-4 text-lg font-bold hover:text-gray-300">
             Contract Account
+          </Link>
+          <Link to="/heiraccount" className="ml-4 text-lg font-bold hover:text-gray-300">
+            Inheiritee MultiSig Account
           </Link>
           <Link to="/heiraccount" className="ml-4 text-lg font-bold hover:text-gray-300">
             Inheiritee MultiSig Account
@@ -36,14 +41,16 @@ function Navbar() {
             </div>
           ) : (
             <div>
-              {connectors.map((connector) => (
-                <button
-                  key={connector.uid}
-                  onClick={() => connect({ connector })}
-                  className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600"
-                >
-                  Connect {connector.name}
-                </button>
+              {connectors
+                .filter((connector) => validConnectorNames.includes(connector.name))
+                .map((connector) => (
+                  <button
+                    key={connector.uid}
+                    onClick={() => connect({ connector })}
+                    className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600"
+                  >
+                    Connect {connector.name}
+                  </button>
               ))}
               <div>{status}</div>
               <div className="text-red-500">{error?.message}</div>
