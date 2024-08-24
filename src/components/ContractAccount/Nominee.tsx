@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BaseError, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
-import { Address, isAddress } from 'viem';
+import { Address, isAddress, zeroAddress } from 'viem';
 import { contractAccountAbi } from '@/services/abi/contractAccountAbi';
 
 import { EnsOrAddressInput } from '@/components/EnsOrAddressInput';
@@ -36,7 +36,7 @@ export const Nominee = ({ userAddress, contractAccountAddress }: NomineeProps) =
 
   // Effect to set the current nominee once the contract config is fetched
   useEffect(() => {
-    if (!isConfigLoading && config) {
+    if (!isConfigLoading && config && isAddress(config[3]) && config[3] != zeroAddress) {
       setCurrentNominee(config[3]); // Set the current nominee from config[3]
     }
     if (configError) {
