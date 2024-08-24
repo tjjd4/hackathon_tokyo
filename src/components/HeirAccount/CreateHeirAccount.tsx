@@ -113,6 +113,7 @@ function CreateHeirAccount({ userAddress, contractAccountAddress, heirAccountAdd
                   className={`mt-1 block w-full p-2 border ${
                     inputErrors[index] ? 'border-red-500' : 'border-gray-300'
                   } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
+                  disabled={isConfirming || isPending}
                 />
                 {inputErrors[index] && (
                   <p className="text-red-500 text-sm mt-1">{inputErrors[index]}</p>
@@ -134,6 +135,7 @@ function CreateHeirAccount({ userAddress, contractAccountAddress, heirAccountAdd
             type="button"
             onClick={handleAddAddress}
             className="mt-3 w-full bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-300"
+            disabled={isConfirming || isPending}
           >
             Add Another Address
           </button>
@@ -143,7 +145,7 @@ function CreateHeirAccount({ userAddress, contractAccountAddress, heirAccountAdd
             onClick={handleCreateHeirAccount}
             disabled={isConfirming || isPending}
           >
-            {(isConfirming || isPending) ? 'Creating...' : 'Create Contract Account'}
+            {(isConfirming || isPending) ? 'Creating...' : 'Create Vault for Inheritance'}
           </button>
 
           {isConfirming && <div className='text-gray-800'>Waiting for confirmation...</div>}

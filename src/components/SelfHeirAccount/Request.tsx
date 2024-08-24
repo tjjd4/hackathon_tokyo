@@ -18,6 +18,9 @@ interface RequestProps {
 export const Request = ({ userAddress, selfHeirAccountAddress }: RequestProps) => {
   const [currentPredecessorAddress, setCurrentPredecessorAddress] = useState<Address | null>(null);
   const [isRequestable, setIsRequestable] = useState(false);
+  const [isWithdrawable, setIsWithdrawable] = useState(false);
+  const [lastAccess, setLastAccess] = useState<number | null>(null);
+  const [lastRequest, setLastRequest] = useState<number | null>(null);
 
   const { 
     data: hash,
@@ -26,6 +29,11 @@ export const Request = ({ userAddress, selfHeirAccountAddress }: RequestProps) =
     writeContract
   } = useWriteContract();
 
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  });
+
+  // Get the predecessor address
   const { data: predecessorAddress, isLoading: isPredecessorAddressLoading, error: predecessorAddressError } = useReadContract({
     abi: heirAccountAbi,
     address: selfHeirAccountAddress,
@@ -34,83 +42,98 @@ export const Request = ({ userAddress, selfHeirAccountAddress }: RequestProps) =
   });
 
   useEffect(() => {
-    if (!isPredecessorAddressLoading && predecessorAddress && isAddress(predecessorAddress)) {
-      setCurrentPredecessorAddress(predecessorAddress);
-    }
-
-    if (predecessorAddressError) {
-      console.log("Error fetching predecessor Address:", predecessorAddressError.message);
-      setCurrentPredecessorAddress(null);
-    }
-  }, [predecessorAddress, isPredecessorAddressLoading, predecessorAddressError])
-
-
-  useEffect(() => {
-    if (currentPredecessorAddress) {
-      const fetch = async () => {
-        const { data: config, error: configError } = await useReadContract({
+    if (predecessorAddress && isAddress(predecessorAddress) && predecessorAddress != zeroAddress) {
+      const fetchContractAccountData = async () => {
+        const { data: config, error: configError } = useReadContract({
           abi: contractAccountAbi,
-          address: currentPredecessorAddress,
+          address: predecessorAddress,
           functionName: 'config',
           args: [],
         });
-
-        const {data: withdrawable, error: withdrawableError } = await useReadContract({
+      
+        // Fetch the withdrawable status from the predecessor contract
+        const { data: withdrawable, error: withdrawableError } = useReadContract({
           abi: contractAccountAbi,
-          address: currentPredecessorAddress,
+          address: predecessorAddress,
           functionName: 'isWithdrawable',
           args: [],
         });
 
-        if (withdrawable == false && config[0] > config[2]) {
-          setIsRequestable(true);
-        } else {
-          setIsRequestable(false);
+        if (config && !configError) {
+          setLastAccess(config[0]);
+          setLastRequest(config[2]);
         }
         if (configError) {
           console.error('Error fetching config:', configError.message);
         }
-        
-        if (withdrawableError) {
-          console.error('Error fetching config:', withdrawableError.message);
-        }
-      };
 
-      fetch();
+        if (withdrawable !== undefined && !withdrawableError) {
+          setIsWithdrawable(withdrawable);
+        }
+        if (configError) {
+          console.error('Error fetching config:', configError.message);
+        }
+      }
+      fetchContractAccountData()
     }
-  }, [currentPredecessorAddress, isConfirmed]);
+  }, [predecessorAddress, isConfirmed]);
+
+
+  // Set the config data after fetching it
+  useEffect(() => {
+    if (isWithdrawable === false && lastAccess && lastRequest && lastAccess > lastRequest) {
+      setIsRequestable(true);
+      return
+    }
+    if (lastAccess && !lastRequest) {
+      setIsRequestable(true);
+      return
+    }
+
+    if (isWithdrawable === true || (!lastAccess && lastRequest)) {
+      setIsRequestable(false);
+      return
+    }
+    if (lastAccess && lastRequest && lastAccess < lastRequest) {
+      setIsRequestable(false)
+    }
+  }, [isWithdrawable, lastAccess, lastRequest]);
 
   const handleRequest = async () => {
-    if (!currentPredecessorAddress) {
-      alert('No predecessor address found!');
-      return;
-    }
-
     writeContract({
-      abi: contractAccountAbi,
-      address: currentPredecessorAddress,
-      functionName: 'requestInactiveAccount',
-      args: [],
+      abi: heirAccountAbi,
+      address: selfHeirAccountAddress,
+      functionName: 'callPredecessorCA',
+      args: [0],
     });
   };
 
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
-    hash,
-  });
-
   return (
-    <>
+    <div className="text-white">
+      {/* Display lastAccess and lastRequest times */}
+      {lastAccess && (
+        <div>
+          <strong>Predecessor's Last Access:</strong> {new Date(lastAccess).toLocaleString()}
+        </div>
+      )}
+      {lastRequest && (
+        <div>
+          <strong>Vault's Last Request Time:</strong> {new Date(lastRequest).toLocaleString()}
+        </div>
+      )}
+      
+      {/* Send Request Button */}
       <button
         onClick={handleRequest}
         className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-        disabled={isPending || isConfirming}
+        disabled={isPending || isConfirming || !isRequestable}
       >
         {isConfirming || isPending ? 'Processing...' : 'Send Request'}
       </button>
-      {isConfirmed && <div className="text-green-500 mt-2">Transaction confirmed!</div>}
+      
       {isConfirming && <div>Waiting for confirmation...</div>}
-      {isConfirmed && <div>Transaction confirmed.</div>}
-
+      {isConfirmed && <div className="text-green-500 mt-2">Transaction confirmed!</div>}
+      
       {/* Show transaction information */}
       {error && (
         <div className="text-red-500 mt-2">
@@ -118,6 +141,6 @@ export const Request = ({ userAddress, selfHeirAccountAddress }: RequestProps) =
         </div>
       )}
       {hash && <div className="text-green-500 mt-2">Transaction Hash: {hash}</div>}
-    </>
+    </div>
   );
-}
+};

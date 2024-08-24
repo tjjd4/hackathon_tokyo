@@ -9,6 +9,7 @@ import { contractAccountFactoryConfig } from "@/services/contractAccountFactoryS
 import { Info } from "@/components/HeirAccount/Info";
 import { Heirs } from "@/components/HeirAccount/Heirs";
 import CreateHeirAccount from "@/components/HeirAccount/CreateHeirAccount";
+import { Will } from "@/components/HeirAccount/Will";
 
 function HeirAccount() {
   const { address, isConnected } = useAccount();
@@ -121,6 +122,10 @@ function HeirAccount() {
                     userAddress={address as Address} 
                     heirAccountAddress={heirAccountAddress as Address} 
                   />
+                  {/* <Will
+                    userAddress={address as Address} 
+                    heirAccountAddress={heirAccountAddress as Address} 
+                  /> */}
                 </div>
               ) : (
                 <CreateHeirAccount 
