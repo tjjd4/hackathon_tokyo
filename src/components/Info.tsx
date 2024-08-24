@@ -1,7 +1,12 @@
 "use client"; // Ensure this is treated as a Client Component
 
 import { useEffect, useState } from 'react';
-import { BaseError, useBalance, useReadContract } from 'wagmi';
+import { 
+  BaseError,
+  useBalance,
+  useReadContract,
+  useWatchContractEvent,
+} from 'wagmi';
 import { Address } from 'viem';
 import { contractAccountAbi } from '../services/abi/contractAccountAbi';
 
@@ -24,9 +29,20 @@ export const Info = ({ userAddress, contractAccountAddress }: InfoProps) => {
   });
 
   // Fetch the balance of the contract account
-  const { data: balanceData, error: balanceError, isLoading: isBalanceLoading } = useBalance({
+  const { data: balanceData, error: balanceError, isLoading: isBalanceLoading, refetch: refetchBalance } = useBalance({
     address: contractAccountAddress,
   });
+
+  useWatchContractEvent({
+    address: contractAccountAddress,
+    abi: contractAccountAbi,
+    eventName: 'PreHookExecuted',
+    onLogs(_) {
+      console.log("refetching info")
+      refetchConfig()
+      refetchBalance()
+    },
+  })
 
   // Effect to set balance and contract config details once fetched
   useEffect(() => {
@@ -53,7 +69,8 @@ export const Info = ({ userAddress, contractAccountAddress }: InfoProps) => {
 
   useEffect(() => {
     if (!isBalanceLoading && balanceData) {
-      setCurrentBalance(`${balanceData.decimals} ${balanceData.symbol}`);
+      console.log("balance data", balanceData)
+      setCurrentBalance(`${balanceData.formatted} ${balanceData.symbol}`);
     }
 
     if (balanceError) {

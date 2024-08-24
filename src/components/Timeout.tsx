@@ -65,11 +65,13 @@ export const Timeout = ({ userAddress, contractAccountAddress }: TimeoutProps) =
 
   // Refetch contract data after transaction is confirmed
   useEffect(() => {
+    console.log("isConfirmed", isConfirmed);
+    console.log("isConfirming", isConfirming);
     if (isConfirmed) {
       refetchConfig(); // Refetch the contract config to get the updated timeout value
       setTimeoutInput(''); // Clear the input
     }
-  }, [isConfirmed, refetchConfig]);
+  }, [isConfirmed, isConfirming]);
 
   return (
     <div className="mb-4">
