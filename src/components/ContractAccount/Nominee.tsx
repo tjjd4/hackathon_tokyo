@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { BaseError, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { Address, isAddress } from 'viem';
-import { contractAccountAbi } from '../services/abi/contractAccountAbi';
+import { contractAccountAbi } from '../../services/abi/contractAccountAbi';
 
 interface NomineeProps {
   userAddress: Address; // Ensures that the address is in a valid format

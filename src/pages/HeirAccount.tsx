@@ -2,24 +2,26 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom'; // For routing
 import { useAccount } from 'wagmi'; // Ensure wagmi is set up correctly in Vite
 
-import CreateContractAccount from '../components/CreateContractAccount';
-import { Nominee } from '../components/Nominee';
+import CreateContractAccount from '../components/ContractAccount/CreateContractAccount';
+import CreateHeirAccount from "../components/HeirAccount/CreateHeirAccount";
+import { Nominee } from '../components/ContractAccount/Nominee';
 import { Address, zeroAddress } from 'viem';
 
 import { useReadContract } from 'wagmi';
-import { contractAccountFactoryConfig } from '../services/contractAccountFactoryService';
-import { Timeout } from "../components/Timeout";
-import { Info } from "../components/Info";
+import { heirAccountFactoryConfig } from "../services/heirAccountFactoryService";
+import { Timeout } from "../components/ContractAccount/Timeout";
+import { Info } from "../components/ContractAccount/Info";
 
 function HeirAccount() {
   const { address, isConnected } = useAccount();
   const navigate = useNavigate();
   const [heirAccountAddress, setHeirAccountAddress] = useState<Address | null>(null);
+  const [hasHeirAccount, setHasHeirAccount] = useState(false);
   
   // Redirect to connect wallet page if the wallet is not connected
   useEffect(() => {
     if (!isConnected) {
-      navigate('/'); // Replace with your actual connect wallet route
+      navigate('/');
     }
   }, [isConnected, navigate]);
 
@@ -28,15 +30,20 @@ function HeirAccount() {
     error,
     isLoading,
   } = useReadContract({
-    ...contractAccountFactoryConfig,
-    functionName: 'deployedContracts',
+    ...heirAccountFactoryConfig,
+    functionName: 'ownedContracts',
     args: [address!],
   });
 
   useEffect(() => {
     console.log(data)
     if (data && data != zeroAddress) {
+      setHasHeirAccount(true)
       setHeirAccountAddress(data);
+    } else {
+      console.log("Set has account false");
+      setHasHeirAccount(false);
+      setHeirAccountAddress(null);
     }
   }, [data]);
 
@@ -69,12 +76,8 @@ function HeirAccount() {
         <p className="text-l font-semibold text-blue-600">
           {(heirAccountAddress && heirAccountAddress != zeroAddress) ? `${heirAccountAddress.toString()}` : 'No Account Found'}
         </p>
-          {heirAccountAddress ? (
+          {hasHeirAccount ? (
             <>
-              <CreateContractAccount
-                userAddress={address as Address}
-                contractAccountAddress={heirAccountAddress as Address}
-              />
               <Info
                 userAddress={address as Address} 
                 contractAccountAddress={heirAccountAddress as Address}
@@ -88,8 +91,11 @@ function HeirAccount() {
                 contractAccountAddress={heirAccountAddress as Address} 
               />
             </>
-            ) : (
-            <p className="text-center text-gray-500">Loading heir contract account details...</p>
+          ) : (
+            <CreateHeirAccount 
+              userAddress={address as Address} 
+              heirAccountAddress={heirAccountAddress as Address}
+            />
           )}
 
         {/* Action Buttons */}
