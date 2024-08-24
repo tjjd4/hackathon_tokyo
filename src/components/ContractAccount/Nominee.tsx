@@ -82,47 +82,37 @@ export const Nominee = ({ userAddress, contractAccountAddress }: NomineeProps) =
 
   return (
     <div className="mb-4">
-      <label className="block text-2xl font-bold text-gray-700">Nominee Settings</label>
+      <h3 className="text-lg font-semibold mb-2 text-gray-800">Nominee Settings</h3>
       
-      {/* Display Current Nominee Address */}
-      <p>Nominee Address: {currentNominee ? currentNominee : 'Not set'}</p>
+      <p className="text-gray-700 mb-2">
+        <span className="font-medium">Nominee Address:</span> {currentNominee ? currentNominee : 'Not set'}
+      </p>
 
-      {/* Input Field for Nominee Address */}
       <input
         type="text"
         value={nomineeInput}
         onChange={(e) => setNomineeInput(e.target.value)}
         disabled={isPending || isConfirming}
         placeholder="Enter nominee address"
-        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700"
       />
 
-      {/* ENS or Address Input Field */}
-      {/* <EnsOrAddressInput
-        value={nomineeInput}
-        onChange={setNomineeInput}
-        disabled={isPending || isConfirming}
-      /> */}
-
-      {/* Add Nominee Button */}
       <button
         onClick={handleAddNominee}
-        className="mt-3 w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-md border border-gray-300 hover:bg-gray-200"
+        className="mt-3 w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-gray-300 disabled:text-gray-500"
         disabled={isPending || isConfirming}
       >
-        Add Nominee
+        {isPending || isConfirming ? 'Processing...' : 'Add Nominee'}
       </button>
 
-      {/* Show error message if nomineeInput is empty or invalid */}
-      {inputError && <p className="text-red-500 text-sm mt-1">{inputError}</p>}
+      {inputError && <p className="text-red-600 text-sm mt-1">{inputError}</p>}
       
-      {/* Show transaction information */}
       {error && (
-        <div className="text-red-500 text-sm mt-1">Error: {(error as BaseError).shortMessage || error.message}</div>
+        <div className="text-red-600 text-sm mt-2">Error: {(error as BaseError).shortMessage || error.message}</div>
       )}
-      {hash && <div>Transaction Hash: {hash}</div>}
-      {isConfirming && <div>Waiting for confirmation...</div>}
-      {isConfirmed && <div>Transaction confirmed.</div>}
+      {hash && <div className="text-gray-600 text-sm mt-2">Transaction Hash: {hash}</div>}
+      {isConfirming && <div className="text-blue-600 text-sm mt-2">Waiting for confirmation...</div>}
+      {isConfirmed && <div className="text-green-600 text-sm mt-2">Transaction confirmed.</div>}
     </div>
   );
 };

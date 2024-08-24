@@ -72,44 +72,40 @@ export const Timeout = ({ userAddress, contractAccountAddress }: TimeoutProps) =
 
   return (
     <div className="mb-4">
-      <label className="block text-2xl font-bold text-gray-700">Timeout Settings</label>
+      <h3 className="text-lg font-semibold mb-2 text-gray-800">Timeout Settings</h3>
 
-      {/* Display Current Timeout */}
-      <p>Current Timeout: {currentTimeout && currentTimeout !== '0' ? currentTimeout : 'Not set'}</p>
+      <p className="text-gray-700 mb-2">
+        <span className="font-medium">Current Timeout:</span> {currentTimeout && currentTimeout !== '0' ? `${currentTimeout} seconds` : 'Not set'}
+      </p>
 
-      {/* Input Field for Timeout */}
       <input
         type="text"
         value={timeoutInput}
         onChange={(e) => setTimeoutInput(e.target.value)}
         disabled={isPending || isConfirming}
         placeholder="Enter timeout (in seconds)"
-        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700"
       />
 
-      {/* Set Timeout Button */}
       <button
         onClick={handleSetTimeout}
-        className="mt-3 w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-md border border-gray-300 hover:bg-gray-200"
+        className="mt-3 w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-gray-300 disabled:text-gray-500"
         disabled={isPending || isConfirming}
       >
-        Set Timeout
+        {isPending || isConfirming ? 'Processing...' : 'Set Timeout'}
       </button>
 
-      {/* Show error message if timeout is empty or invalid */}
-      {inputError && <p className="text-red-500 text-sm mt-1">{inputError}</p>}
+      {inputError && <p className="text-red-600 text-sm mt-1">{inputError}</p>}
 
-      {/* Display transaction info */}
-      {hash && <div>Transaction Hash: {hash}</div>}
-      {isConfirming && <div>Waiting for confirmation...</div>}
-      {isConfirmed && <div>Transaction confirmed.</div>}
+      {hash && <div className="text-gray-600 text-sm mt-2">Transaction Hash: {hash}</div>}
+      {isConfirming && <div className="text-blue-600 text-sm mt-2">Waiting for confirmation...</div>}
+      {isConfirmed && <div className="text-green-600 text-sm mt-2">Transaction confirmed.</div>}
 
-      {/* Handle errors */}
       {error && (
-        <div className="text-red-500 text-sm mt-1">Error: {(error as BaseError).shortMessage || error.message}</div>
+        <div className="text-red-600 text-sm mt-2">Error: {(error as BaseError).shortMessage || error.message}</div>
       )}
       {configError && (
-        <div className="text-red-500 text-sm mt-1">Error: {configError.message}</div>
+        <div className="text-red-600 text-sm mt-2">Error: {configError.message}</div>
       )}
     </div>
   );

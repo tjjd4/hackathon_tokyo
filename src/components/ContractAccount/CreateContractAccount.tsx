@@ -40,10 +40,10 @@ function CreateContractAccount({ userAddress, contractAccountAddress, refetch }:
   }, [isConfirmed, isConfirming]);
 
   return (
-    <>
+    <div className="mb-4">
       {(!contractAccountAddress || contractAccountAddress == zeroAddress) && (
         <button
-          className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-gray-300 disabled:text-gray-500"
           onClick={handleCreateContractAccount}
           disabled={isConfirming || isPending}
         >
@@ -51,10 +51,10 @@ function CreateContractAccount({ userAddress, contractAccountAddress, refetch }:
         </button>
       )}
 
-      {isConfirming && <div className='text-gray-800'>Waiting for confirmation...</div>}
-      {isConfirmed && <div className='text-gray-800'>Account created.</div>} 
-      {creatingError && <div className='text-gray-800'>Account creation failed.</div>}
-    </>
+      {isConfirming && <div className='text-blue-600 text-sm mt-2'>Waiting for confirmation...</div>}
+      {isConfirmed && <div className='text-green-600 text-sm mt-2'>Account created successfully.</div>} 
+      {creatingError && <div className='text-red-600 text-sm mt-2'>Account creation failed. Please try again.</div>}
+    </div>
   );
 }
 

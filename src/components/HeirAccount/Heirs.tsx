@@ -78,24 +78,22 @@ export const Heirs = ({ userAddress, heirAccountAddress }: HeirsProps) => {
   }, [isConfirming, isConfirmed])
 
   return (
-    <>
-      {/* Display Heirs Addresses */}
-      <h3 className="mt-4 text-xl font-semibold text-gray-700">Heir Addresses</h3>
+    <div className="text-white">
+      <h3 className="mt-4 text-xl font-semibold">Heir Addresses</h3>
       {!isHeirsAddressesLoading && currentHeirsAddresses && currentHeirsAddresses.length > 0 ? (
         <ul className="mt-2 list-disc list-inside">
           {currentHeirsAddresses.map((address: Address, index: number) => (
-            <li key={index} className="text-gray-800">{address}</li>
+            <li key={index} className="text-gray-300">{address}</li>
           ))}
         </ul>
       ) : (
-        <p>{isHeirsAddressesLoading ? 'Loading heir addresses...' : 'No heir addresses found'}</p>
+        <p className="text-gray-400">{isHeirsAddressesLoading ? 'Loading heir addresses...' : 'No heir addresses found'}</p>
       )}
 
-      {/* Dropdown to select an heir address */}
       <div className="mt-4">
-        <label className="block text-sm font-medium text-gray-700">Select Heir to Adjust</label>
+        <label className="block text-sm font-medium">Select Heir to Adjust</label>
         <select
-          className="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          className="mt-2 block w-full p-2 bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-white"
           value={selectedHeir || ''}
           onChange={(e) => setSelectedHeir(e.target.value as Address)}
         >
@@ -107,27 +105,25 @@ export const Heirs = ({ userAddress, heirAccountAddress }: HeirsProps) => {
         </select>
       </div>
 
-      {/* Input field for new heir address */}
       <div className="mt-4">
-        <label className="block text-sm font-medium text-gray-700">New Heir Address</label>
+        <label className="block text-sm font-medium">New Heir Address</label>
         <input
           type="text"
           value={newAddress}
           onChange={(e) => setNewAddress(e.target.value)}
           placeholder="Enter new heir address"
-          className={`mt-1 block w-full p-2 border ${
-            inputError ? 'border-red-500' : 'border-gray-300'
-          } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500`}
+          className={`mt-1 block w-full p-2 bg-gray-700 border ${
+            inputError ? 'border-red-500' : 'border-gray-600'
+          } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-white`}
         />
         {inputError && (
-          <p className="text-red-500 text-sm mt-1">{inputError}</p>
+          <p className="text-red-400 text-sm mt-1">{inputError}</p>
         )}
       </div>
 
-      {/* Button to trigger heir adjustment */}
       <div className="mt-4">
         <button
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 disabled:bg-gray-500 disabled:cursor-not-allowed"
           onClick={handleAjustHeir}
           disabled={isPending || !selectedHeir || newAddress.trim() === ''}
         >
@@ -135,16 +131,15 @@ export const Heirs = ({ userAddress, heirAccountAddress }: HeirsProps) => {
         </button>
       </div>
 
-      {isConfirming && <div>Waiting for confirmation...</div>}
-      {isConfirmed && <div>Transaction confirmed.</div>}
+      {isConfirming && <div className="text-blue-300 mt-2">Waiting for confirmation...</div>}
+      {isConfirmed && <div className="text-green-300 mt-2">Transaction confirmed.</div>}
 
-      {/* Handle errors */}
       {heirsAddressesError && (
-        <div className="text-red-500 text-sm mt-1">Error: {heirsAddressesError.message}</div>
+        <div className="text-red-400 text-sm mt-1">Error: {heirsAddressesError.message}</div>
       )}
       {adjustHeirError && (
-        <div className="text-red-500 text-sm mt-1">Error: {(adjustHeirError as BaseError).shortMessage || adjustHeirError.message}</div>
+        <div className="text-red-400 text-sm mt-1">Error: {(adjustHeirError as BaseError).shortMessage || adjustHeirError.message}</div>
       )}
-    </>
+    </div>
   );
 };

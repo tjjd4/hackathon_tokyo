@@ -78,23 +78,27 @@ export const Info = ({ userAddress, contractAccountAddress }: InfoProps) => {
 
   return (
     <div className="mb-4">
-      <label className="block text-2xl font-bold text-gray-700">Account Information</label>
+      <h3 className="text-lg font-semibold mb-2 text-gray-800">Account Information</h3>
 
-      {/* Display Current Balance */}
-      <p>Current Balance: {currentBalance && !balanceError && currentBalance}</p>
+      <div className="space-y-2">
+        <p className="text-gray-700">
+          <span className="font-medium">Current Balance:</span> {currentBalance && !balanceError ? currentBalance : 'N/A'}
+        </p>
 
-      {/* Display Last Access */}
-      <p>Last Access: {currentLastAccess && !configError && currentLastAccess}</p>
+        <p className="text-gray-700">
+          <span className="font-medium">Last Access:</span> {currentLastAccess && !configError ? currentLastAccess : 'N/A'}
+        </p>
 
-      {/* Display Last Request */}
-      <p>Last Request: {currentLastRequest && !configError && currentLastRequest}</p>
+        <p className="text-gray-700">
+          <span className="font-medium">Last Request:</span> {currentLastRequest && !configError ? currentLastRequest : 'N/A'}
+        </p>
+      </div>
 
-      {/* Handle errors */}
       {configError && (
-        <div className="text-red-500 text-sm mt-1">Error: {configError.message}</div>
+        <div className="text-red-600 text-sm mt-2">Error: {configError.message}</div>
       )}
       {balanceError && (
-        <div className="text-red-500 text-sm mt-1">Error: {(balanceError as BaseError).shortMessage || balanceError.message}</div>
+        <div className="text-red-600 text-sm mt-2">Error: {(balanceError as BaseError).shortMessage || balanceError.message}</div>
       )}
     </div>
   );
