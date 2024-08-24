@@ -1,7 +1,7 @@
 export const contractAccountAbi = [
   {
     type: "constructor",
-    name: null, // Constructor doesn't have a name
+    name: null,
     stateMutability: "nonpayable",
     inputs: [
       {
@@ -15,7 +15,7 @@ export const contractAccountAbi = [
   {
     type: "event",
     name: "NomineeSet",
-    stateMutability: null, // Events don't have stateMutability
+    stateMutability: null,
     inputs: [
       {
         indexed: true,
