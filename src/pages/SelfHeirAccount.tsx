@@ -25,7 +25,7 @@ function SelfHeirAccount() {
     isLoading,
   } = useReadContract({
     ...heirAccountFactoryConfig,
-    functionName: 'predecessorToMultiSigAccount',
+    functionName: 'heirToVault',
     args: [address!],
   });
 

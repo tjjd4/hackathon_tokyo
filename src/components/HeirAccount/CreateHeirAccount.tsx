@@ -52,8 +52,8 @@ function CreateHeirAccount({ userAddress, heirAccountAddress }: CreateHeirAccoun
     writeContract({
       abi: heirAccountFactoryAbi,
       address: heirAccountFactoryAddress,
-      functionName: 'createWallet',
-      args: [validAddresses, BigInt(numOfConfirmationRequired)],
+      functionName: 'createVault',
+      args: [validAddresses, userAddress],
     });
   };
 

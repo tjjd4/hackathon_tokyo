@@ -29,7 +29,7 @@ function HeirAccount() {
     isLoading,
   } = useReadContract({
     ...heirAccountFactoryConfig,
-    functionName: 'predecessorToMultiSigAccount',
+    functionName: 'predecessorToVault',
     args: [address!],
   });
 

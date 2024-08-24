@@ -21,7 +21,7 @@ export const Info = ({ userAddress, heirAccountAddress }: InfoProps) => {
   const { data: predecessorAddress, isLoading: isPredecessorAddressLoading, error: predecessorAddressError } = useReadContract({
     abi: heirAccountAbi,
     address: heirAccountAddress,
-    functionName: 'predecessor',
+    functionName: 'predecessorCA',
     args: [],
   });
 
@@ -41,7 +41,7 @@ export const Info = ({ userAddress, heirAccountAddress }: InfoProps) => {
   })
 
   useEffect(() => {
-    if (!isPredecessorAddressLoading && isAddress(predecessorAddress)) {
+    if (!isPredecessorAddressLoading && predecessorAddress && isAddress(predecessorAddress)) {
       console.log("Predecessor Address", predecessorAddress)
       setCurrentPredecessorAddress(predecessorAddress);
     }

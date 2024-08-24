@@ -3,6 +3,8 @@ import { BaseError, useReadContract, useWriteContract, useWaitForTransactionRece
 import { Address, isAddress } from 'viem';
 import { contractAccountAbi } from '@/services/abi/contractAccountAbi';
 
+import { EnsOrAddressInput } from '@/components/EnsOrAddressInput';
+
 interface NomineeProps {
   userAddress: Address; // Ensures that the address is in a valid format
   contractAccountAddress: Address;
@@ -96,6 +98,13 @@ export const Nominee = ({ userAddress, contractAccountAddress }: NomineeProps) =
         placeholder="Enter nominee address"
         className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
       />
+
+      {/* ENS or Address Input Field */}
+      {/* <EnsOrAddressInput
+        value={nomineeInput}
+        onChange={setNomineeInput}
+        disabled={isPending || isConfirming}
+      /> */}
 
       {/* Add Nominee Button */}
       <button

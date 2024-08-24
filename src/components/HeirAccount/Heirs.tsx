@@ -35,12 +35,12 @@ export const Heirs = ({ userAddress, heirAccountAddress }: HeirsProps) => {
   } = useReadContract({
     abi: heirAccountAbi,
     address: heirAccountAddress,
-    functionName: 'getOwners',
+    functionName: 'getSigners',
     args: [],
   });
 
   useEffect(() => {
-    if (data && !isHeirsAddressesLoading && data.length) {
+    if (data && !isHeirsAddressesLoading && data.length > 0) {
       setCurrentHeirsAddresses([...data]);
     }
     if (heirsAddressesError) {
@@ -58,12 +58,12 @@ export const Heirs = ({ userAddress, heirAccountAddress }: HeirsProps) => {
     setInputError(null); // Clear the error if everything is valid
 
     // Call the contract function with selectedHeir and newAddress
-    writeContract({
-      abi: heirAccountAbi,
-      address: heirAccountAddress,
-      functionName: 'adjustOwner',
-      args: [selectedHeir, newAddress],
-    });
+    // writeContract({
+    //   abi: heirAccountAbi,
+    //   address: heirAccountAddress,
+    //   functionName: 'adjustOwner',
+    //   args: [selectedHeir, newAddress],
+    // });
   };
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
