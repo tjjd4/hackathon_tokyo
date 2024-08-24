@@ -74,7 +74,7 @@ export const Info = ({ userAddress, contractAccountAddress }: InfoProps) => {
       console.log("Error fetching balance:", balanceError.message);
       setCurrentBalance(null);
     }
-  }, [, balanceData, balanceError])
+  }, [balanceData, isBalanceLoading, balanceError])
 
   return (
     <div className="mb-4">

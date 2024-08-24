@@ -6,6 +6,8 @@ import { useReadContract } from 'wagmi';
 
 import { heirAccountFactoryConfig } from "@/services/heirAccountFactoryService";
 
+import { Info } from "@/components/SelfHeirAccount/Info";
+
 function SelfHeirAccount() {
   const { address, isConnected } = useAccount();
   const navigate = useNavigate();
@@ -72,11 +74,11 @@ function SelfHeirAccount() {
         </p>
           {hasSelfHeirAccount ? (
             <>
-              {/* <Info
+              <Info
                 userAddress={address as Address} 
-                heirAccountAddress={heirAccountAddress as Address}
+                selfHeirAccountAddress={selfHeirAccountAddress as Address}
               />
-              <Heirs
+              {/* <Heirs
                 userAddress={address as Address} 
                 heirAccountAddress={heirAccountAddress as Address} 
               /> */}

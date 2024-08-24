@@ -10,28 +10,28 @@ import { heirAccountAbi } from '@/services/abi/heirAccountAbi';
 
 interface InfoProps {
   userAddress: Address; // Ensures that the address is in a valid format
-  heirAccountAddress: Address;
+  selfHeirAccountAddress: Address;
 }
 
-export const Info = ({ userAddress, heirAccountAddress }: InfoProps) => {
+export const Info = ({ userAddress, selfHeirAccountAddress }: InfoProps) => {
   const [currentPredecessorAddress, setCurrentPredecessorAddress] = useState<Address | null>(null);
   const [currentBalance, setCurrentBalance] = useState<string | null>(null);
 
   // Fetch the contract config
   const { data: predecessorAddress, isLoading: isPredecessorAddressLoading, error: predecessorAddressError } = useReadContract({
     abi: heirAccountAbi,
-    address: heirAccountAddress,
+    address: selfHeirAccountAddress,
     functionName: 'predecessorCA',
     args: [],
   });
 
   // Fetch the balance of the contract account
   const { data: balanceData, error: balanceError, isLoading: isBalanceLoading, refetch: refetchBalance } = useBalance({
-    address: heirAccountAddress,
+    address: selfHeirAccountAddress,
   });
 
   useWatchContractEvent({
-    address: heirAccountAddress,
+    address: selfHeirAccountAddress,
     abi: heirAccountAbi,
     eventName: 'ExecuteTransaction',
     onLogs(_) {
