@@ -3,16 +3,8 @@ export const heirAccountAbi = [
     type: 'constructor',
     stateMutability: 'nonpayable',
     inputs: [
-      {
-        internalType: 'address[]',
-        name: '_signers',
-        type: 'address[]'
-      },
-      {
-        internalType: 'address',
-        name: '_predecessorCA',
-        type: 'address'
-      }
+      { internalType: 'address[]', name: '_signers', type: 'address[]' },
+      { internalType: 'address', name: '_predecessorCA', type: 'address' }
     ]
   },
   {
@@ -20,18 +12,8 @@ export const heirAccountAbi = [
     name: 'ConfirmTransaction',
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'signer',
-        type: 'address'
-      },
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'txIndex',
-        type: 'uint256'
-      }
+      { indexed: true, internalType: 'address', name: 'signer', type: 'address' },
+      { indexed: true, internalType: 'uint256', name: 'txIndex', type: 'uint256' }
     ]
   },
   {
@@ -39,24 +21,9 @@ export const heirAccountAbi = [
     name: 'Deposit',
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'sender',
-        type: 'address'
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256'
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'balance',
-        type: 'uint256'
-      }
+      { indexed: true, internalType: 'address', name: 'sender', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'balance', type: 'uint256' }
     ]
   },
   {
@@ -64,18 +31,8 @@ export const heirAccountAbi = [
     name: 'ExecuteTransaction',
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'signer',
-        type: 'address'
-      },
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'txIndex',
-        type: 'uint256'
-      }
+      { indexed: true, internalType: 'address', name: 'signer', type: 'address' },
+      { indexed: true, internalType: 'uint256', name: 'txIndex', type: 'uint256' }
     ]
   },
   {
@@ -83,18 +40,8 @@ export const heirAccountAbi = [
     name: 'RevokeConfirmation',
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'signer',
-        type: 'address'
-      },
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'txIndex',
-        type: 'uint256'
-      }
+      { indexed: true, internalType: 'address', name: 'signer', type: 'address' },
+      { indexed: true, internalType: 'uint256', name: 'txIndex', type: 'uint256' }
     ]
   },
   {
@@ -102,18 +49,8 @@ export const heirAccountAbi = [
     name: 'SignerAdjusted',
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'oldSigner',
-        type: 'address'
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'newSigner',
-        type: 'address'
-      }
+      { indexed: true, internalType: 'address', name: 'oldSigner', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'newSigner', type: 'address' }
     ]
   },
   {
@@ -121,30 +58,10 @@ export const heirAccountAbi = [
     name: 'SubmitConsensus',
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'signer',
-        type: 'address'
-      },
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'txIndex',
-        type: 'uint256'
-      },
-      {
-        indexed: false,
-        internalType: 'address[]',
-        name: 'recipients',
-        type: 'address[]'
-      },
-      {
-        indexed: false,
-        internalType: 'uint256[]',
-        name: 'portions',
-        type: 'uint256[]'
-      }
+      { indexed: true, internalType: 'address', name: 'signer', type: 'address' },
+      { indexed: true, internalType: 'uint256', name: 'txIndex', type: 'uint256' },
+      { indexed: false, internalType: 'address[]', name: 'recipients', type: 'address[]' },
+      { indexed: false, internalType: 'uint256[]', name: 'portions', type: 'uint256[]' }
     ]
   },
   {
@@ -152,36 +69,11 @@ export const heirAccountAbi = [
     name: 'SubmitTransaction',
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'signer',
-        type: 'address'
-      },
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'txIndex',
-        type: 'uint256'
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'to',
-        type: 'address'
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256'
-      },
-      {
-        indexed: false,
-        internalType: 'bytes',
-        name: 'data',
-        type: 'bytes'
-      }
+      { indexed: true, internalType: 'address', name: 'signer', type: 'address' },
+      { indexed: true, internalType: 'uint256', name: 'txIndex', type: 'uint256' },
+      { indexed: true, internalType: 'address', name: 'to', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
+      { indexed: false, internalType: 'bytes', name: 'data', type: 'bytes' }
     ]
   },
   {
@@ -189,16 +81,8 @@ export const heirAccountAbi = [
     name: 'MakeAWill',
     stateMutability: 'nonpayable',
     inputs: [
-      {
-        internalType: 'address[]',
-        name: '_recipient',
-        type: 'address[]'
-      },
-      {
-        internalType: 'uint256[]',
-        name: '_portion',
-        type: 'uint256[]'
-      }
+      { internalType: 'address[]', name: '_recipient', type: 'address[]' },
+      { internalType: 'uint256[]', name: '_portion', type: 'uint256[]' }
     ],
     outputs: []
   },
@@ -207,16 +91,8 @@ export const heirAccountAbi = [
     name: 'adjustSigner',
     stateMutability: 'nonpayable',
     inputs: [
-      {
-        internalType: 'address',
-        name: '_from',
-        type: 'address'
-      },
-      {
-        internalType: 'address',
-        name: '_to',
-        type: 'address'
-      }
+      { internalType: 'address', name: '_from', type: 'address' },
+      { internalType: 'address', name: '_to', type: 'address' }
     ],
     outputs: []
   },
@@ -224,19 +100,8 @@ export const heirAccountAbi = [
     type: 'function',
     name: 'alreadyWithdrawnWill',
     stateMutability: 'view',
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address'
-      }
-    ],
     outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool'
-      }
+      { internalType: 'bool', name: '', type: 'bool' }
     ]
   },
   {
@@ -244,11 +109,7 @@ export const heirAccountAbi = [
     name: 'callPredecessorCA',
     stateMutability: 'nonpayable',
     inputs: [
-      {
-        internalType: 'enum Vault_v6.CAAction',
-        name: 'action',
-        type: 'uint8'
-      }
+      { internalType: 'enum Vault_v6.CAAction', name: 'action', type: 'uint8' }
     ],
     outputs: []
   },
@@ -270,82 +131,38 @@ export const heirAccountAbi = [
     type: 'function',
     name: 'getConfirmList',
     stateMutability: 'view',
-    inputs: [],
     outputs: [
-      {
-        internalType: 'address[]',
-        name: '_confirmedList',
-        type: 'address[]'
-      },
-      {
-        internalType: 'address[]',
-        name: '_unconfirmedList',
-        type: 'address[]'
-      }
+      { internalType: 'address[]', name: '_confirmedList', type: 'address[]' },
+      { internalType: 'address[]', name: '_unconfirmedList', type: 'address[]' }
     ]
   },
   {
     type: 'function',
     name: 'getSigners',
     stateMutability: 'view',
-    inputs: [],
     outputs: [
-      {
-        internalType: 'address[]',
-        name: '',
-        type: 'address[]'
-      }
+      { internalType: 'address[]', name: '', type: 'address[]' }
     ]
   },
   {
     type: 'function',
     name: 'getTransaction',
     stateMutability: 'view',
-    inputs: [],
     outputs: [
-      {
-        internalType: 'bytes',
-        name: 'data',
-        type: 'bytes'
-      },
-      {
-        internalType: 'bool',
-        name: 'executed',
-        type: 'bool'
-      },
-      {
-        internalType: 'uint256',
-        name: 'numConfirmations',
-        type: 'uint256'
-      },
-      {
-        internalType: 'address[]',
-        name: 'recipients',
-        type: 'address[]'
-      },
-      {
-        internalType: 'uint256[]',
-        name: 'portions',
-        type: 'uint256[]'
-      },
-      {
-        internalType: 'bool',
-        name: 'isBatchWithdrawal',
-        type: 'bool'
-      }
+      { internalType: 'bytes', name: 'data', type: 'bytes' },
+      { internalType: 'bool', name: 'executed', type: 'bool' },
+      { internalType: 'uint256', name: 'numConfirmations', type: 'uint256' },
+      { internalType: 'address[]', name: 'recipients', type: 'address[]' },
+      { internalType: 'uint256[]', name: 'portions', type: 'uint256[]' },
+      { internalType: 'bool', name: 'isBatchWithdrawal', type: 'bool' }
     ]
   },
   {
     type: 'function',
     name: 'getTransactionCount',
     stateMutability: 'view',
-    inputs: [],
     outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256'
-      }
+      { internalType: 'uint256', name: '', type: 'uint256' }
     ]
   },
   {
@@ -353,23 +170,11 @@ export const heirAccountAbi = [
     name: 'isConfirmed',
     stateMutability: 'view',
     inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256'
-      },
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address'
-      }
+      { internalType: 'uint256', name: '', type: 'uint256' },
+      { internalType: 'address', name: '', type: 'address' }
     ],
     outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool'
-      }
+      { internalType: 'bool', name: '', type: 'bool' }
     ]
   },
   {
@@ -377,57 +182,34 @@ export const heirAccountAbi = [
     name: 'isSigner',
     stateMutability: 'view',
     inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address'
-      }
+      { internalType: 'address', name: '', type: 'address' }
     ],
     outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool'
-      }
+      { internalType: 'bool', name: '', type: 'bool' }
     ]
   },
   {
     type: 'function',
     name: 'numConfirmationsRequired',
     stateMutability: 'view',
-    inputs: [],
     outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256'
-      }
+      { internalType: 'uint256', name: '', type: 'uint256' }
     ]
   },
   {
     type: 'function',
     name: 'predecessorCA',
     stateMutability: 'view',
-    inputs: [],
     outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address'
-      }
+      { internalType: 'address', name: '', type: 'address' }
     ]
   },
   {
     type: 'function',
     name: 'predecessorMakeAWill',
     stateMutability: 'view',
-    inputs: [],
     outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool'
-      }
+      { internalType: 'bool', name: '', type: 'bool' }
     ]
   },
   {
@@ -442,18 +224,10 @@ export const heirAccountAbi = [
     name: 'signers',
     stateMutability: 'view',
     inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256'
-      }
+      { internalType: 'uint256', name: '', type: 'uint256' }
     ],
     outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address'
-      }
+      { internalType: 'address', name: '', type: 'address' }
     ]
   },
   {
@@ -461,16 +235,8 @@ export const heirAccountAbi = [
     name: 'submitConsensus',
     stateMutability: 'nonpayable',
     inputs: [
-      {
-        internalType: 'address[]',
-        name: '_recipients',
-        type: 'address[]'
-      },
-      {
-        internalType: 'uint256[]',
-        name: '_portions',
-        type: 'uint256[]'
-      }
+      { internalType: 'address[]', name: '_recipients', type: 'address[]' },
+      { internalType: 'uint256[]', name: '_portions', type: 'uint256[]' }
     ],
     outputs: []
   },
@@ -479,21 +245,9 @@ export const heirAccountAbi = [
     name: 'submitTransaction',
     stateMutability: 'nonpayable',
     inputs: [
-      {
-        internalType: 'address',
-        name: '_to',
-        type: 'address'
-      },
-      {
-        internalType: 'uint256',
-        name: '_value',
-        type: 'uint256'
-      },
-      {
-        internalType: 'bytes',
-        name: '_data',
-        type: 'bytes'
-      }
+      { internalType: 'address', name: '_to', type: 'address' },
+      { internalType: 'uint256', name: '_value', type: 'uint256' },
+      { internalType: 'bytes', name: '_data', type: 'bytes' }
     ],
     outputs: []
   },
@@ -502,81 +256,15 @@ export const heirAccountAbi = [
     name: 'transactions',
     stateMutability: 'view',
     inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256'
-      }
+      { internalType: 'uint256', name: '', type: 'uint256' }
     ],
     outputs: [
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address'
-      },
-      {
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256'
-      },
-      {
-        internalType: 'bytes',
-        name: 'data',
-        type: 'bytes'
-      },
-      {
-        internalType: 'bool',
-        name: 'executed',
-        type: 'bool'
-      },
-      {
-        internalType: 'uint256',
-        name: 'numConfirmations',
-        type: 'uint256'
-      },
-      {
-        internalType: 'bool',
-        name: 'isBatchWithdrawal',
-        type: 'bool'
-      }
-    ]
-  },
-  {
-    type: 'function',
-    name: 'willAmount',
-    stateMutability: 'view',
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address'
-      }
-    ],
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256'
-      }
-    ]
-  },
-  {
-    type: 'function',
-    name: 'willPortions',
-    stateMutability: 'view',
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address'
-      }
-    ],
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256'
-      }
+      { internalType: 'address', name: 'to', type: 'address' },
+      { internalType: 'uint256', name: 'value', type: 'uint256' },
+      { internalType: 'bytes', name: 'data', type: 'bytes' },
+      { internalType: 'bool', name: 'executed', type: 'bool' },
+      { internalType: 'uint256', name: 'numConfirmations', type: 'uint256' },
+      { internalType: 'bool', name: 'isBatchWithdrawal', type: 'bool' }
     ]
   },
   {
