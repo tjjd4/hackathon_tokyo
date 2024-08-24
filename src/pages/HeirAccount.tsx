@@ -27,6 +27,7 @@ function HeirAccount() {
     data,
     error,
     isLoading,
+    refetch,
   } = useReadContract({
     ...heirAccountFactoryConfig,
     functionName: 'predecessorToVault',
@@ -34,12 +35,10 @@ function HeirAccount() {
   });
 
   useEffect(() => {
-    console.log(data)
     if (data && data != zeroAddress) {
       setHasHeirAccount(true)
       setHeirAccountAddress(data);
     } else {
-      console.log("Set `Has account` false");
       setHasHeirAccount(false);
       setHeirAccountAddress(null);
     }
@@ -89,6 +88,7 @@ function HeirAccount() {
             <CreateHeirAccount 
               userAddress={address as Address} 
               heirAccountAddress={heirAccountAddress as Address}
+              refetch={refetch}
             />
           )}
 

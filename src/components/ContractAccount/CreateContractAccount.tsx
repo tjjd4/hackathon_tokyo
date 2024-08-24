@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { contractAccountFactoryAbi } from '@/services/abi/contractAccountFactoryAbi';
 import { contractAccountFactoryAddress } from '@/services/contractAccountFactoryService';
 import { Address, zeroAddress } from 'viem';
@@ -6,9 +8,10 @@ import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
 interface CreateContractAccountProps {
   userAddress: Address; // Ensures that the address is in a valid format
   contractAccountAddress: Address;
+  refetch: () => void;
 }
 
-function CreateContractAccount({ userAddress, contractAccountAddress }: CreateContractAccountProps) {
+function CreateContractAccount({ userAddress, contractAccountAddress, refetch }: CreateContractAccountProps) {
   const { 
     data: hash,
     isPending,
@@ -29,6 +32,12 @@ function CreateContractAccount({ userAddress, contractAccountAddress }: CreateCo
   useWaitForTransactionReceipt({
     hash,
   })
+
+  useEffect(() => {
+    if (isConfirmed) {
+      refetch();
+    }
+  }, [isConfirmed, isConfirming]);
 
   return (
     <>

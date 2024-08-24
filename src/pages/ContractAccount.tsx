@@ -28,6 +28,7 @@ function ContractAccount() {
     data,
     error,
     isLoading,
+    refetch,
   } = useReadContract({
     ...contractAccountFactoryConfig,
     functionName: 'deployedContracts',
@@ -35,12 +36,10 @@ function ContractAccount() {
   });
 
   useEffect(() => {
-    console.log("Data", data)
     if (data && data != zeroAddress && isAddress(data)) {
       setHasContractAccount(true);
       setContractAccountAddress(data);
     } else {
-      console.log("set false")
       setHasContractAccount(false);
       setContractAccountAddress(null);
     }
@@ -94,6 +93,7 @@ function ContractAccount() {
             <CreateContractAccount
               userAddress={address as Address}
               contractAccountAddress={contractAccountAddress as Address}
+              refetch={refetch}
             />
           )}
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { heirAccountFactoryAbi } from '@/services/abi/heirAccountFactoryAbi';
 import { heirAccountFactoryAddress } from '@/services/heirAccountFactoryService';
 import { Address, isAddress, zeroAddress } from 'viem';
@@ -7,9 +7,10 @@ import { BaseError, useWaitForTransactionReceipt, useWriteContract } from 'wagmi
 interface CreateHeirAccountProps {
   userAddress: Address; // Ensures that the address is in a valid format
   heirAccountAddress: Address;
+  refetch: () => void;
 }
 
-function CreateHeirAccount({ userAddress, heirAccountAddress }: CreateHeirAccountProps) {
+function CreateHeirAccount({ userAddress, heirAccountAddress, refetch }: CreateHeirAccountProps) {
   const [addresses, setAddresses] = useState<string[]>(['']); // Start with one input field
   const [inputErrors, setInputErrors] = useState<string[]>([]); // Track errors for each input
 
@@ -55,10 +56,16 @@ function CreateHeirAccount({ userAddress, heirAccountAddress }: CreateHeirAccoun
     });
   };
 
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({
-      hash,
-    });
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = 
+  useWaitForTransactionReceipt({
+    hash,
+  });
+  
+  useEffect(() => {
+    if (isConfirmed) {
+      refetch();
+    }
+  }, [isConfirmed, isConfirming]);
 
   // Add a new input field
   const handleAddAddress = () => {
