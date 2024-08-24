@@ -28,7 +28,6 @@ function ContractAccount() {
     data,
     error,
     isLoading,
-    refetch: refetchContractAddress,
   } = useReadContract({
     ...contractAccountFactoryConfig,
     functionName: 'deployedContracts',
