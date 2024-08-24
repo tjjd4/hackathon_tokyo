@@ -6,7 +6,7 @@ import {
   useWatchContractEvent,
 } from 'wagmi';
 import { Address } from 'viem';
-import { heirAccountAbi } from '../../services/abi/heirAccountAbi';
+import { heirAccountAbi } from '@/services/abi/heirAccountAbi';
 
 interface InfoProps {
   userAddress: Address; // Ensures that the address is in a valid format

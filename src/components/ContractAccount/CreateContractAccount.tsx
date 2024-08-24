@@ -1,5 +1,5 @@
-import { contractAccountFactoryAbi } from '../../services/abi/contractAccountFactoryAbi';
-import { contractAccountFactoryAddress } from '../../services/contractAccountFactoryService';
+import { contractAccountFactoryAbi } from '@/services/abi/contractAccountFactoryAbi';
+import { contractAccountFactoryAddress } from '@/services/contractAccountFactoryService';
 import { Address, zeroAddress } from 'viem';
 import { useWaitForTransactionReceipt, useWriteContract } from 'wagmi'
 

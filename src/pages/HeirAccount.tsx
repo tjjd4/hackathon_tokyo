@@ -2,15 +2,14 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom'; // For routing
 import { useAccount } from 'wagmi'; // Ensure wagmi is set up correctly in Vite
 
-import CreateContractAccount from '../components/ContractAccount/CreateContractAccount';
-import CreateHeirAccount from "../components/HeirAccount/CreateHeirAccount";
-import { Nominee } from '../components/ContractAccount/Nominee';
+import CreateHeirAccount from "@/components/HeirAccount/CreateHeirAccount";
+import { Nominee } from '@/components/ContractAccount/Nominee';
 import { Address, zeroAddress } from 'viem';
 
 import { useReadContract } from 'wagmi';
-import { heirAccountFactoryConfig } from "../services/heirAccountFactoryService";
-import { Timeout } from "../components/ContractAccount/Timeout";
-import { Info } from "../components/ContractAccount/Info";
+import { heirAccountFactoryConfig } from "@/services/heirAccountFactoryService";
+import { Timeout } from "@/components/ContractAccount/Timeout";
+import { Info } from "@/components/ContractAccount/Info";
 
 function HeirAccount() {
   const { address, isConnected } = useAccount();

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { heirAccountFactoryAbi } from '../../services/abi/heirAccountFactoryAbi';
-import { heirAccountFactoryAddress } from '../../services/heirAccountFactoryService';
+import { heirAccountFactoryAbi } from '@/services/abi/heirAccountFactoryAbi';
+import { heirAccountFactoryAddress } from '@/services/heirAccountFactoryService';
 import { Address, isAddress, zeroAddress } from 'viem';
 import { BaseError, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 

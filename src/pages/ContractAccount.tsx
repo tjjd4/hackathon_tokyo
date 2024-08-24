@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom'; // For routing
 import { useAccount } from 'wagmi'; // Ensure wagmi is set up correctly in Vite
 
-import CreateContractAccount from '../components/ContractAccount/CreateContractAccount';
-import { Nominee } from '../components/ContractAccount/Nominee';
+import CreateContractAccount from '@/components/ContractAccount/CreateContractAccount';
+import { Nominee } from '@/components/ContractAccount/Nominee';
 import { Address, isAddress, zeroAddress } from 'viem';
 
 import { useReadContract } from 'wagmi';
-import { contractAccountFactoryConfig } from '../services/contractAccountFactoryService';
-import { Timeout } from "../components/ContractAccount/Timeout"
-import { Info } from "../components/ContractAccount/Info";
+import { contractAccountFactoryConfig } from '@/services/contractAccountFactoryService';
+import { Timeout } from "@/components/ContractAccount/Timeout"
+import { Info } from "@/components/ContractAccount/Info";
 
 function ContractAccount() {
   const { address, isConnected } = useAccount();
